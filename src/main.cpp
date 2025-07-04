@@ -1,6 +1,10 @@
+#include "engine/ChatbotEngine.hpp"
 #include <iostream>
 
 int main() {
-    std::cout << "Hello world from chatbot engine!!" << std::endl;
+    ChatbotEngine engine("../scripts/chatbot1.json");
+    engine.run();
+    std::cout << "Estado es " << engine.get_variable("estado") << std::endl;
+
     return 0;
 }

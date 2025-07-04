@@ -1,5 +1,5 @@
 [
   { "type": "message", "text": "Hola, ¿cómo estás?" },
   { "type": "input", "variable": "estado" },
-  { "type": "message", "text": "Gracias por responder." }
+  { "type": "message", "text": "Gracias por responder. Veo que estás [estado]!" }
 ]
