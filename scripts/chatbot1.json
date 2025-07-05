@@ -1,5 +1,39 @@
 [
-  { "type": "message", "text": "Hola, ¿cómo estás?" },
-  { "type": "input", "variable": "estado" },
-  { "type": "message", "text": "Gracias por responder. Veo que estás [estado]!" }
+  { "type": "message", "text": "Hola, espero que esté muy bien, digite su color favorito." },
+  { "type": "input", "variable": "color_favorito" },
+  { "type": "message", "text": "Veo que su color favorito es el [color_favorito]!" },
+  { "type": "if", "variable": "color_favorito", "evaluation": "equal", "value": "rojo",
+    "then": [ 
+      { "type": "message", "text": "Que interesante! Y cuál su número favorito?" },
+      { "type": "input", "variable": "numero_favorito" },
+      { "type": "if", "variable": "numero_favorito", "evaluation": "equal", "value": "10",
+        "then": [
+          { "type": "message", "text": "Que coincidencia, el 10 también es mi número favorito!" }
+        ],
+        "else": [
+          { "type": "message", "text": "Mi número favorito es el 10, pero el [numero_favorito] es una buena elección." }
+        ]
+      }
+    ],
+    "else": [ 
+      { "type": "message", "text": "Elige un número entre 1 y 5" },
+      { "type": "input", "variable": "numero_seleccionado" },
+      { "type": "if", "variable": "numero_seleccionado", "evaluation": "less equal", "value": "3",
+        "then": [
+          { "type": "if", "variable": "numero_seleccionado", "evaluation": "not equal", "value": "3",
+            "then": [
+              { "type": "message", "text": "Su número es menor a 3, de hecho es [numero_seleccionado]" }
+            ],
+            "else": [
+              { "type": "message", "text": "Su número es exactamente la mitad! Su número es [numero_seleccionado]" }
+            ]
+          }
+        ],
+        "else": [
+          { "type": "message", "text": "Su número es mayor a 3, de hecho es [numero_seleccionado]" }
+        ]
+      }
+    ]
+  },
+  { "type": "message", "text": "Adiós caballero, buenas noches." }
 ]

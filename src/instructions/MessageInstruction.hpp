@@ -8,5 +8,7 @@ public:
     void execute(ChatbotEngine& engine) override;
 
 private:
+    void replceVariables(ChatbotEngine& engine);
+
     std::string text_;
 };

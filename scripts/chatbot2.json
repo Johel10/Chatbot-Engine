@@ -1,0 +1,21 @@
+[
+  { "type": "message", "text": "Hola, ¿cómo estás?" },
+  { "type": "input", "variable": "estado" },
+  { "type": "message", "text": "Gracias por responder. Veo que estás [estado]!" },
+  { "type": "if", "variable": "estado", "evaluation": "equal", "value": "bien",
+    "then": [ 
+      { "type": "message", "text": "Me alrego mucho" },
+      { "type": "message", "text": "Que tan bien te sientes?" },
+      { "type": "input", "variable": "estado_especifico" },
+      { "type": "message", "text": "Me alegra realmente saber que estás [estado_especifico]" },
+      { "type": "message", "text": "Te dejo descansar, buenas noches" }
+    ],
+    "else": [ 
+      { "type": "message", "text": "En serio? Que mal, cuéntame más" },
+      { "type": "input", "variable": "problema" },
+      { "type": "message", "text": "Tu problema [problema] es realmente malo, espero que estés mejor" },
+      { "type": "message", "text": "Buenas noches, descansa" }
+    ]
+  },
+  { "type": "message", "text": "Adiós caballero" }
+]

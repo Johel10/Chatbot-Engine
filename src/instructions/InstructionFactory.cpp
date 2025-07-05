@@ -11,8 +11,18 @@ std::unique_ptr<Instruction> create_instruction(const nlohmann::json& json_step)
     } else if (type == "input") {
         return std::make_unique<InputInstruction>(json_step["variable"]);
     } else if (type == "if") {
-        Condition condition = { json_step["variable"], json_step["operator"], json_step["value"] };
-        return std::make_unique<IfInstruction>(condition);
+        const Condition if_condition = { json_step["variable"], json_step["evaluation"], json_step["value"] };
+        auto if_instruction = std::make_unique<IfInstruction>(if_condition);
+        const nlohmann::json then_sequence = json_step["then"];
+        const nlohmann::json else_sequence = json_step["else"];
+
+        for (const auto& json : then_sequence)
+            if_instruction->add_then_instruction(create_instruction(json));
+
+        for (const auto& json : else_sequence)
+            if_instruction->add_else_instruction(create_instruction(json));
+
+        return if_instruction;
     }
 
     return nullptr;

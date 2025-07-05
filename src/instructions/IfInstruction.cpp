@@ -15,12 +15,10 @@ void IfInstruction::execute(ChatbotEngine& engine) {
     static ConditionEvaluator evaluator;
 
     if (evaluator.evaluate(condition_, engine)) {
-        for (auto& instruction : then_block_) {
+        for (auto& instruction : then_block_)
             instruction->execute(engine);
-        }
     } else {
-        for (auto& instruction : else_block_) {
+        for (auto& instruction : else_block_)
             instruction->execute(engine);
-        }
     }
 }
