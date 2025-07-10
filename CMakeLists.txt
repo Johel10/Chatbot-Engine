@@ -20,6 +20,7 @@ add_executable(chatbot
     src/instructions/MessageInstruction.cpp
     src/instructions/InstructionFactory.cpp
     src/logic/ConditionEvaluator.cpp
+    src/logic/RestrictionEvaluator.cpp
     src/session/ChatbotSession.cpp
     # agrega aquí otros .cpp que vayas creando
 )

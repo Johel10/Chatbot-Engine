@@ -2,16 +2,37 @@
 #include "instructions/MessageInstruction.hpp"
 #include "instructions/InputInstruction.hpp"
 #include "instructions/IfInstruction.hpp"
+#include <iostream>
 
 std::unique_ptr<Instruction> create_instruction(const nlohmann::json& json_step) {
-    std::string type = json_step["type"];
+    std::string type = json_step["type"].get<std::string>();
     
     if (type == "message") {
-        return std::make_unique<MessageInstruction>(json_step["text"]);
+        return std::make_unique<MessageInstruction>(json_step["text"].get<std::string>());
     } else if (type == "input") {
-        return std::make_unique<InputInstruction>(json_step["variable"]);
+
+        Restriction restriction = { 
+            json_step["variable"].get<std::string>(),
+            {}
+        };
+
+        for (const auto& evaluations : json_step["restriction"]) {
+            restriction.rules.push_back(Rules{
+                evaluations["evaluation"].get<std::string>(),
+                evaluations["value"].get<std::string>()
+            });
+        }
+
+        return std::make_unique<InputInstruction>(json_step["variable"].get<std::string>(), restriction);
+
     } else if (type == "if") {
-        const Condition if_condition = { json_step["variable"], json_step["evaluation"], json_step["value"] };
+        
+        const Condition if_condition = { 
+            json_step["variable"].get<std::string>(),
+            json_step["evaluation"].get<std::string>(),
+            json_step["value"].get<std::string>()
+        };
+
         auto if_instruction = std::make_unique<IfInstruction>(if_condition);
         const nlohmann::json then_sequence = json_step["then"];
         const nlohmann::json else_sequence = json_step["else"];
@@ -23,6 +44,7 @@ std::unique_ptr<Instruction> create_instruction(const nlohmann::json& json_step)
             if_instruction->add_else_instruction(create_instruction(json));
 
         return if_instruction;
+
     }
 
     return nullptr;

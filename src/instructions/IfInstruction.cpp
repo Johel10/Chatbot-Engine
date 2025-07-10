@@ -1,7 +1,7 @@
 #include "instructions/IfInstruction.hpp"
 
-IfInstruction::IfInstruction(Condition condition)
-    : condition_(std::move(condition)) {}
+IfInstruction::IfInstruction(const Condition& condition)
+    : condition_(condition) {}
 
 void IfInstruction::add_then_instruction(std::unique_ptr<Instruction> instruction) {
     then_block_.push_back(std::move(instruction));

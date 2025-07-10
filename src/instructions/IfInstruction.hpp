@@ -6,7 +6,7 @@
 
 class IfInstruction : public Instruction {
 public:
-    IfInstruction(Condition condition);
+    IfInstruction(const Condition& condition);
     void add_then_instruction(std::unique_ptr<Instruction> instruction);
     void add_else_instruction(std::unique_ptr<Instruction> instruction);
     void execute(ChatbotEngine& engine) override;
