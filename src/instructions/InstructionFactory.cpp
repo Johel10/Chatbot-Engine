@@ -2,13 +2,16 @@
 #include "instructions/MessageInstruction.hpp"
 #include "instructions/InputInstruction.hpp"
 #include "instructions/IfInstruction.hpp"
+#include "instructions/GotoInstruction.hpp"
 #include <iostream>
 
 std::unique_ptr<Instruction> create_instruction(const nlohmann::json& json_step) {
+    
     std::string type = json_step["type"].get<std::string>();
     
     if (type == "message") {
         return std::make_unique<MessageInstruction>(json_step["text"].get<std::string>());
+
     } else if (type == "input") {
 
         Restriction restriction = { 
@@ -23,7 +26,14 @@ std::unique_ptr<Instruction> create_instruction(const nlohmann::json& json_step)
             });
         }
 
-        return std::make_unique<InputInstruction>(json_step["variable"].get<std::string>(), restriction);
+        auto input_instruction = std::make_unique<InputInstruction>(json_step["variable"].get<std::string>(), restriction, json_step.value("label", ""));
+
+        if (json_step.contains("else") && json_step["else"].is_array()) {
+            for (const auto& json : json_step["else"])
+                input_instruction->add_else_instruction(std::move(create_instruction(json)));
+        }
+
+        return input_instruction;
 
     } else if (type == "if") {
         
@@ -45,6 +55,8 @@ std::unique_ptr<Instruction> create_instruction(const nlohmann::json& json_step)
 
         return if_instruction;
 
+    } else if (type == "goto") {
+        return std::make_unique<GotoInstruction>(json_step["goto"].get<std::string>(), json_step.value("label", ""));
     }
 
     return nullptr;

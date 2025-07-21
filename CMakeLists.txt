@@ -19,6 +19,7 @@ add_executable(chatbot
     src/instructions/InputInstruction.cpp
     src/instructions/MessageInstruction.cpp
     src/instructions/InstructionFactory.cpp
+    src/instructions/GotoInstruction.cpp
     src/logic/ConditionEvaluator.cpp
     src/logic/RestrictionEvaluator.cpp
     src/session/ChatbotSession.cpp

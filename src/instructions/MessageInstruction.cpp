@@ -4,8 +4,8 @@
 #include <sstream>
 #include <iostream>
 
-MessageInstruction::MessageInstruction(const std::string& text)
-    : text_(text) {}
+MessageInstruction::MessageInstruction(const std::string& text, const std::string& label)
+    : text_(text), Instruction(label) {}
 
 void MessageInstruction::execute(ChatbotEngine& engine) {
     replceVariables(engine);
